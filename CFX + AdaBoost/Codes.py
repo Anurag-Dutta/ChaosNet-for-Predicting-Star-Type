@@ -45,7 +45,7 @@ def k_cross_validation(FOLD_NO, traindata, trainlabel, testdata, testlabel, INIT
     BESTF1 = 0
     KF = KFold(n_splits= FOLD_NO, random_state=42, shuffle=True) 
     KF.get_n_splits(traindata) 
-    print(KF) 
+
     
     n_estimator = [1, 10, 50, 100, 500, 1000, 5000, 10000]
 

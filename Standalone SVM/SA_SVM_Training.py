@@ -81,7 +81,7 @@ y = np.char.replace(y, '5.0', '5', count=None)
 y = y.astype(int)
 
 # Splitting the dataset for training and testing (80-20)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=2)
 
 # Normalisation - Column-wise
 X_train_norm = (X_train - np.min(X_train, 0)) / (np.max(X_train, 0) - np.min(X_train, 0))
