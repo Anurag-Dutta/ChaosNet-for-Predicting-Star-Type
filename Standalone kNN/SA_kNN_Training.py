@@ -84,59 +84,52 @@ y = y.astype(int)
 #Splitting the dataset for training and testing (80-20)
 X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.2, random_state=2)
 
-
-#Normalisation - Column-wise
-X_train_norm = (X_train - np.min(X_train,0)) / (np.max(X_train,0) - np.min(X_train,0))
+# Normalisation - Column-wise
+X_train_norm = (X_train - np.min(X_train, 0)) / (np.max(X_train, 0) - np.min(X_train, 0))
 X_train_norm = X_train_norm.astype(float)
-X_test_norm = (X_test - np.min(X_test,0)) / (np.max(X_test,0) - np.min(X_test,0))
+X_test_norm = (X_test - np.min(X_test, 0)) / (np.max(X_test, 0) - np.min(X_test, 0))
 X_test_norm = X_test_norm.astype(float)
 
-
-#Algorithm - k-NN
+# Algorithm - k-NN
 BESTF1 = 0
 FOLD_NO = 5
-KF = KFold(n_splits= FOLD_NO, shuffle=True)
-KF.get_n_splits(X_train_norm) 
-print(KF) 
-for K in np.arange(1, 29, 2):
-    FSCORE_TEMP=[]
-    
+KF = KFold(n_splits=FOLD_NO, random_state=42, shuffle=True)
+KF.get_n_splits(X_train_norm)
+print(KF)
+for K in np.arange(1, 6, 2):
+    FSCORE_TEMP = []
+
     for TRAIN_INDEX, VAL_INDEX in KF.split(X_train_norm):
-        
         X_TRAIN, X_VAL = X_train_norm[TRAIN_INDEX], X_train_norm[VAL_INDEX]
         Y_TRAIN, Y_VAL = y_train[TRAIN_INDEX], y_train[VAL_INDEX]
-    
 
-        clf = KNeighborsClassifier(n_neighbors = K)
+        clf = KNeighborsClassifier(n_neighbors=K)
         clf.fit(X_TRAIN, Y_TRAIN.ravel())
         Y_PRED = clf.predict(X_VAL)
         f1 = f1_score(Y_VAL, Y_PRED, average='macro')
         FSCORE_TEMP.append(f1)
         print('F1 Score', f1)
-    print("Mean F1-Score for K = ", K," is  = ",  np.mean(FSCORE_TEMP)  )
-    if(np.mean(FSCORE_TEMP) > BESTF1):
+    print("Mean F1-Score for K = ", K, " is  = ", np.mean(FSCORE_TEMP))
+    if (np.mean(FSCORE_TEMP) > BESTF1):
         BESTF1 = np.mean(FSCORE_TEMP)
         BESTK = K
-        
+
 print("BEST F1SCORE", BESTF1)
 print("BEST K = ", BESTK)
 
-
 print("Saving Hyperparameter Tuning Results")
-   
-  
+
 PATH = os.getcwd()
 RESULT_PATH = PATH + '/SA-TUNING/RESULTS/'
-
 
 try:
     os.makedirs(RESULT_PATH)
 except OSError:
-    print ("Creation of the result directory %s not required" % RESULT_PATH)
+    print("Creation of the result directory %s not required" % RESULT_PATH)
 else:
-    print ("Successfully created the result directory %s" % RESULT_PATH)
+    print("Successfully created the result directory %s" % RESULT_PATH)
 
-np.save(RESULT_PATH+"/h_K.npy", np.array([BESTK]) ) 
-np.save(RESULT_PATH+"/h_F1SCORE.npy", np.array([BESTF1]) ) 
+np.save(RESULT_PATH + "/h_K.npy", np.array([BESTK]))
+np.save(RESULT_PATH + "/h_F1SCORE.npy", np.array([BESTF1]))
 
     
