@@ -92,17 +92,17 @@ X_test_norm = X_test_norm.astype(float)
 # Algorithm - SVM
 BESTF1 = 0
 FOLD_NO = 5
-KF = KFold(n_splits=FOLD_NO, random_state=42, shuffle=True)
+KF = KFold(n_splits=FOLD_NO, random_state=2, shuffle=True)
 KF.get_n_splits(X_train_norm)
 print(KF)
-for c in np.arange(0.1, 100.0, 0.1):
+for c in np.arange(0.1, 10.0, 0.1):
     FSCORE_TEMP = []
 
     for TRAIN_INDEX, VAL_INDEX in KF.split(X_train_norm):
         X_TRAIN, X_VAL = X_train_norm[TRAIN_INDEX], X_train_norm[VAL_INDEX]
         Y_TRAIN, Y_VAL = y_train[TRAIN_INDEX], y_train[VAL_INDEX]
 
-        clf = SVC(C=c, kernel='rbf', decision_function_shape='ovr', random_state=42)
+        clf = SVC(C=c, kernel='rbf', decision_function_shape='ovr', random_state=2)
         clf.fit(X_TRAIN, Y_TRAIN.ravel())
         Y_PRED = clf.predict(X_VAL)
         f1 = f1_score(Y_VAL, Y_PRED, average='macro')

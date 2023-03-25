@@ -88,7 +88,7 @@ X_test_norm = X_test_norm.astype(float)
 
 #validation
 FOLD_NO = 5
-INITIAL_NEURAL_ACTIVITY = [0.029]
-DISCRIMINATION_THRESHOLD = [0.070]
-EPSILON = [0.213]
+INITIAL_NEURAL_ACTIVITY = [0.7]
+DISCRIMINATION_THRESHOLD = [0.987]
+EPSILON = [0.022]
 k_cross_validation(FOLD_NO, X_train_norm, y_train, X_test_norm, y_test, INITIAL_NEURAL_ACTIVITY, DISCRIMINATION_THRESHOLD, EPSILON)

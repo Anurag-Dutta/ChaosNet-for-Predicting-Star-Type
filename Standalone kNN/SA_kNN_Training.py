@@ -79,10 +79,8 @@ y = np.char.replace(y, '4.0', '4', count=None)
 y = np.char.replace(y, '5.0', '5', count=None)
 y = y.astype(int)
 
-
-
-#Splitting the dataset for training and testing (80-20)
-X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.2, random_state=2)
+# Splitting the dataset for training and testing (80-20)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Normalisation - Column-wise
 X_train_norm = (X_train - np.min(X_train, 0)) / (np.max(X_train, 0) - np.min(X_train, 0))
@@ -132,4 +130,3 @@ else:
 np.save(RESULT_PATH + "/h_K.npy", np.array([BESTK]))
 np.save(RESULT_PATH + "/h_F1SCORE.npy", np.array([BESTF1]))
 
-    

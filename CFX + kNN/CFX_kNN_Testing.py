@@ -113,7 +113,7 @@ F1SCORE = np.load(RESULT_PATH+"/h_F1SCORE.npy")[0]
 
 
 FEATURE_MATRIX_TRAIN = CFX.transform(X_train_norm, INA, 10000, EPSILON_1, DT)
-FEATURE_MATRIX_VAL = CFX.transform(X_test_norm, INA, 10000, EPSILON_1, DT)            
+FEATURE_MATRIX_VAL = CFX.transform(X_test_norm, INA, 10000, EPSILON_1, DT)
 
 clf = KNeighborsClassifier(n_neighbors = K)
 clf.fit(FEATURE_MATRIX_TRAIN, y_train.ravel())
