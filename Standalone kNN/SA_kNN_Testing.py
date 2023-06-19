@@ -108,5 +108,19 @@ f1 = f1_score(y_test, y_pred, average='macro')
 
 print('Training F1 Score = ', F1SCORE)
 print('Testing F1 Score = ', f1)
+
+
+from sklearn import metrics
+import matplotlib.pyplot as plt
+from matplotlib import rc
+# rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+rc('font',**{'family':'serif','serif':['Calibri Light'], 'size':18})
+rc('text', usetex=True)
+
+
+confusion_matrix = metrics.confusion_matrix(y_test, y_pred)
+cm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = ["0", "1", "2", "3", "4", "5"])
+cm_display.plot(cmap='Reds')
+plt.show()
     
 np.save(RESULT_PATH+"/F1SCORE_TEST.npy", np.array([f1]))

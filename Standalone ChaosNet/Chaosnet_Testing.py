@@ -121,4 +121,18 @@ mean_each_class, Y_PRED = chaosnet(FEATURE_MATRIX_TRAIN, y_train, FEATURE_MATRIX
 f1 = f1_score(y_test, Y_PRED, average='macro')
 print('TESTING F1 SCORE', f1)
 
+
+from sklearn import metrics
+import matplotlib.pyplot as plt
+from matplotlib import rc
+# rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+rc('font',**{'family':'serif','serif':['Calibri Light'], 'size':18})
+rc('text', usetex=True)
+
+
+confusion_matrix = metrics.confusion_matrix(y_test, Y_PRED)
+cm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = ["0", "1", "2", "3", "4", "5"])
+cm_display.plot(cmap='Reds')
+plt.show()
+
 np.save(RESULT_PATH+"/F1SCORE_TEST.npy", np.array([f1]) )
